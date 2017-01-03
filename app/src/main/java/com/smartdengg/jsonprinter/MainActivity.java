@@ -4,9 +4,13 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +51,22 @@ public class MainActivity extends AppCompatActivity {
     final String finalTodayJson = todayJson;
     findViewById(R.id.today).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        JsonPrinter.d("today", finalTodayJson);
+        JsonPrinter.d("today", finalTodayJson, "打印URL地址");
+      }
+    });
+
+    final Map<String, String> params = new HashMap<>(3);
+    params.put("cityname", URLEncoder.encode("北京"));
+    params.put("dtype", "json");
+    params.put("key1", "f4817e5b8e43721a6fe7352bb60e27b2");
+    params.put("key2", "f4817e5b8e43721a6fe7352bb60e27b2");
+    params.put("key3", "f4817e5b8e43721a6fe7352bb60e27b2");
+    params.put("key4", "f4817e5b8e43721a6fe7352bb60e27b2");
+    params.put("key5", "f4817e5b8e43721a6fe7352bb60e27b2");
+
+    findViewById(R.id.gson).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        JsonPrinter.d("gson", new Gson().toJson(params));
       }
     });
 

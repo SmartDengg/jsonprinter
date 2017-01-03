@@ -22,7 +22,7 @@ public class JsonPrinter {
    * }</pre>
    */
   public static final int JSON_INDENT = 4;
-  public static final int METHOD_COUNT = 40;
+  public static final int METHOD_COUNT = 0;
 
   private static Printer sPrinter;
 
@@ -34,51 +34,51 @@ public class JsonPrinter {
     throw new AssertionError("No instance!");
   }
 
-  public static void v(String message) {
-    sPrinter.v(TAG, message);
+  public static void v(String json, String... extra) {
+    sPrinter.v(TAG, json, extra);
   }
 
-  public static void v(String tag, String message) {
-    sPrinter.v(tag, message);
+  public static void v(String tag, String json, String... extra) {
+    sPrinter.v(tag, json, extra);
   }
 
-  public static void i(String message) {
-    sPrinter.i(TAG, message);
+  public static void i(String json, String... extra) {
+    sPrinter.i(TAG, json, extra);
   }
 
-  public static void i(String tag, String message) {
-    sPrinter.i(tag, message);
+  public static void i(String tag, String json, String... extra) {
+    sPrinter.i(tag, json, extra);
   }
 
-  public static void d(String message) {
-    sPrinter.d(TAG, message);
+  public static void d(String json) {
+    sPrinter.d(TAG, json);
   }
 
-  public static void d(String tag, String message) {
-    sPrinter.d(tag, message);
+  public static void d(String tag, String json, String... extra) {
+    sPrinter.d(tag, json, extra);
   }
 
-  public static void w(String message) {
-    sPrinter.w(TAG, message);
+  public static void w(String json, String... extra) {
+    sPrinter.w(TAG, json, extra);
   }
 
-  public static void w(String tag, String message) {
-    sPrinter.w(tag, message);
+  public static void w(String tag, String json, String... extra) {
+    sPrinter.w(tag, json, extra);
   }
 
-  public static void e(String message) {
-    sPrinter.e(TAG, message);
+  public static void e(String json, String... extra) {
+    sPrinter.e(TAG, json, extra);
   }
 
-  public static void e(String tag, String message) {
-    sPrinter.e(tag, message);
+  public static void e(String tag, String json, String... extra) {
+    sPrinter.e(tag, json, extra);
   }
 
-  public static void wtf(String message) {
-    sPrinter.wtf(TAG, message);
+  public static void wtf(String json, String... extra) {
+    sPrinter.wtf(TAG, json, extra);
   }
 
-  public static void wtf(String tag, String message) {
-    sPrinter.wtf(TAG, message);
+  public static void wtf(String tag, String json, String... extra) {
+    sPrinter.wtf(TAG, json, extra);
   }
 }
