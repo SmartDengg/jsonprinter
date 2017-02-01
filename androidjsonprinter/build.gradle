@@ -1,14 +1,18 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.SmartDengg'
 
 android {
   compileSdkVersion 24
-  buildToolsVersion "25.0.2"
+  buildToolsVersion "24.0.2"
+
   defaultConfig {
-    applicationId "com.smartdengg.jsonprinter"
     minSdkVersion 14
     targetSdkVersion 24
     versionCode 1
     versionName "1.0"
+
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -20,13 +24,11 @@ android {
 }
 
 dependencies {
-  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.android.support:appcompat-v7:24.0.0'
-  testCompile 'junit:junit:4.12'
-  compile 'com.google.code.gson:gson:2.2.4'
-  compile 'com.jakewharton.timber:timber:4.5.1'
-  compile project(':androidjsonprinter')
+  provided 'com.google.android:annotations:4.1.1.4'
+  provided 'com.jakewharton.timber:timber:4.5.1'
 }

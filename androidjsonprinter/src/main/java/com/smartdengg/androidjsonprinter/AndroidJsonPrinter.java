@@ -1,4 +1,4 @@
-package com.smartdengg.jsonprinter;
+package com.smartdengg.androidjsonprinter;
 
 import android.os.Build;
 import android.text.TextUtils;
@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.smartdengg.jsonprinter.JsonPrinter.JSON_INDENT;
+import static com.smartdengg.androidjsonprinter.JsonPrinter.JSON_INDENT;
 
 /**
  * 创建时间: 2016/12/18 19:51 <br>
@@ -38,11 +38,11 @@ class AndroidJsonPrinter implements Printer {
   private static final int CALL_STACK_OFFSET = 4;
   private static final String SEPARATOR = System.getProperty("line.separator");
 
-  private AndroidJsonPrinter() {
+  AndroidJsonPrinter() {
 
   }
 
-  static AndroidJsonPrinter newInstance() {
+  static Printer newInstance() {
     return new AndroidJsonPrinter();
   }
 

@@ -3,20 +3,31 @@ package com.smartdengg.jsonprinter;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
+import com.smartdengg.androidjsonprinter.JsonPrinter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    Timber.plant(new Timber.DebugTree());
+
+    Timber.plant(new Timber.Tree() {
+      @Override protected void log(int priority, String tag, String message, Throwable t) {
+        Log.println(priority, tag, message);
+      }
+    });
 
     String cityJson = "";
     String todayJson = "";

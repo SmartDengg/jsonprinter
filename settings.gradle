@@ -1,1 +1,1 @@
-include ':app', ':jsonprinter'
+include ':app', ':jsonprinter', ':androidjsonprinter'
