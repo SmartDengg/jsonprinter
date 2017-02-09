@@ -1,5 +1,6 @@
 package com.smartdengg.androidjsonprinter;
 
+import com.smartdengg.printer.Printer;
 import timber.log.Timber;
 
 /**
@@ -24,7 +25,7 @@ public class JsonPrinter {
    * }</pre>
    */
   public static final int JSON_INDENT = 4;
-  public static final int METHOD_COUNT = 0;
+  public static final int METHOD_COUNT = 6;
 
   private static Printer sPrinter;
 

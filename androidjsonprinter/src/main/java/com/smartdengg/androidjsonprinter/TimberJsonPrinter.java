@@ -1,5 +1,6 @@
 package com.smartdengg.androidjsonprinter;
 
+import com.smartdengg.printer.Printer;
 import timber.log.Timber;
 
 /**

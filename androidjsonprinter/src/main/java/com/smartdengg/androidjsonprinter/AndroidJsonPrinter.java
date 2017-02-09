@@ -3,6 +3,7 @@ package com.smartdengg.androidjsonprinter;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import com.smartdengg.printer.Printer;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.json.JSONArray;
@@ -100,7 +101,7 @@ class AndroidJsonPrinter implements Printer {
 
   private void logHeaderContent(int priority, String tag, int methodCount) {
 
-    String level = "  \u21e2  ";
+    String level = "  |-";
     StackTraceElement[] trace = new Throwable().getStackTrace();
 
     log(priority, tag, HORIZONTAL_DOUBLE_LINE
@@ -121,16 +122,17 @@ class AndroidJsonPrinter implements Printer {
       StringBuilder builder = new StringBuilder();
       builder.append(HORIZONTAL_DOUBLE_LINE)
           .append(level)
+          .append(' ')
           .append(getSimpleClassName(trace[stackIndex].getClassName()))
-          .append(".")
+          .append('.')
           .append(trace[stackIndex].getMethodName())
-          .append(" ")
+          .append(' ')
           .append(" (")
           .append(trace[stackIndex].getFileName())
-          .append(":")
+          .append(':')
           .append(trace[stackIndex].getLineNumber())
           .append(")");
-      level = "  " + level;
+      level = level + '-';
       log(priority, tag, builder.toString());
     }
     logDivider(priority, tag);

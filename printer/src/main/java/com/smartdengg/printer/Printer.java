@@ -1,8 +1,6 @@
-package com.smartdengg.jsonprinter;
+package com.smartdengg.printer;
 
-interface Printer {
-
-  //Printer t(String tag, int methodCount, int jsonIndent);
+public interface Printer {
 
   void v(String tag, String json, String... extra);
 

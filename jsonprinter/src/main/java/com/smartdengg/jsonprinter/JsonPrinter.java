@@ -1,5 +1,7 @@
 package com.smartdengg.jsonprinter;
 
+import com.smartdengg.printer.Printer;
+
 /**
  * 创建时间:  2016/12/18 20:58 <br>
  * 作者:  SmartDengg <br>

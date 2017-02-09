@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Timber.plant(new Timber.DebugTree());
+    //Timber.plant(new Timber.DebugTree());
 
     Timber.plant(new Timber.Tree() {
       @Override protected void log(int priority, String tag, String message, Throwable t) {
