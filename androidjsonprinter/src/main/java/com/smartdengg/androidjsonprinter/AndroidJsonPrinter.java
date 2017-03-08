@@ -1,6 +1,5 @@
 package com.smartdengg.androidjsonprinter;
 
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import com.smartdengg.printer.Printer;
@@ -104,11 +103,7 @@ class AndroidJsonPrinter implements Printer {
     String level = "  |-";
     StackTraceElement[] trace = new Throwable().getStackTrace();
 
-    log(priority, tag, HORIZONTAL_DOUBLE_LINE
-        + " Thread: ["
-        + Thread.currentThread().getName()
-        + " ] "
-        + SEPARATOR);
+    log(priority, tag, HORIZONTAL_DOUBLE_LINE + getCurrentThreadInfo() + SEPARATOR);
 
     int stackOffset = CALL_STACK_OFFSET;
     //corresponding method count with the current stack may exceeds the stack trace. Trims the count
@@ -177,7 +172,6 @@ class AndroidJsonPrinter implements Printer {
   }
 
   private String getTag() {
-
     String tag = sLocalTag.get();
     if (tag != null) {
       sLocalTag.remove();
@@ -194,6 +188,35 @@ class AndroidJsonPrinter implements Printer {
     //noinspection ConstantConditions
     if (count < 0) throw new IllegalStateException("methodCount cannot be negative");
     return count;
+  }
+
+  private static String getCurrentThreadInfo() {
+
+    Thread thread = Thread.currentThread();
+    ThreadGroup group = thread.getThreadGroup();
+    String threadName = thread.getName();
+    int threadPriority = thread.getPriority();
+
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("Thread")
+        .append('[')
+        .append("Name")
+        .append('=')
+        .append(threadName)
+        .append(',')
+        .append("Priority")
+        .append('=')
+        .append(threadPriority)
+        .append(',');
+
+    if (group != null) {
+      stringBuilder.append("GroupName").append('=').append(group.getName());
+    } else {
+      stringBuilder.append("GroupName").append('=').append("N/A");
+    }
+    stringBuilder.append(']');
+
+    return stringBuilder.toString();
   }
 
   private static boolean compare(String str1, String str2) {
@@ -227,7 +250,7 @@ class AndroidJsonPrinter implements Printer {
   @Override public synchronized void log(int priority, String tag, String json) {
     if (json.length() < LOGGER_ENTRY_MAX_PAYLOAD) {
       if (priority == Log.ASSERT) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) Log.wtf(tag, json);
+        Log.wtf(tag, json);
       } else {
         Log.println(priority, tag, json);
       }
@@ -242,7 +265,7 @@ class AndroidJsonPrinter implements Printer {
         int end = Math.min(newline, i + LOGGER_ENTRY_MAX_PAYLOAD);
         String chunkMessage = json.substring(i, end);
         if (priority == Log.ASSERT) {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) Log.wtf(tag, chunkMessage);
+          Log.wtf(tag, chunkMessage);
         } else {
           Log.println(priority, tag, chunkMessage);
         }
