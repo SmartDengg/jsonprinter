@@ -23,13 +23,17 @@ public class JsonPrinter {
    *     ]
    * }</pre>
    */
-  public static final int JSON_INDENT = 4;
-  public static final int METHOD_COUNT = 0;
+  public static int JSON_INDENT = 4;
+  public static int METHOD_COUNT = 0;
 
   private static Printer sPrinter;
 
   static {
-    if (Platform.isAndroid()) sPrinter = AndroidJsonPrinter.newInstance();
+    if (Platform.isAndroid()) {
+      sPrinter = AndroidJsonPrinter.newInstance();
+    } else {
+      sPrinter = JavaJsonPrinter.newInstance();
+    }
   }
 
   private JsonPrinter() {

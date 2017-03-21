@@ -177,9 +177,8 @@ class AndroidJsonPrinter implements Printer {
       sLocalTag.remove();
       return tag;
     }
-    if (TextUtils.isEmpty(tag = JsonPrinter.TAG)) {
-      throw new IllegalStateException("TAG cannot be null");
-    }
+    tag = JsonPrinter.TAG;
+    if (tag == null || tag.length() == 0) throw new IllegalStateException("TAG cannot be null");
     return tag;
   }
 
@@ -198,7 +197,7 @@ class AndroidJsonPrinter implements Printer {
     int threadPriority = thread.getPriority();
 
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Thread")
+    stringBuilder.append(" Thread")
         .append('[')
         .append("Name")
         .append('=')

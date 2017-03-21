@@ -10,10 +10,6 @@ import timber.log.Timber;
  */
 class TimberJsonPrinter extends AndroidJsonPrinter {
 
-  private TimberJsonPrinter() {
-    super();
-  }
-
   static Printer newInstance() {
     return new TimberJsonPrinter();
   }

@@ -1,6 +1,5 @@
 package com.smartdengg.jsonprinter;
 
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import com.smartdengg.printer.Printer;
@@ -18,6 +17,13 @@ import static com.smartdengg.jsonprinter.JsonPrinter.JSON_INDENT;
  * 描述: Json格式的日志打印类
  */
 class AndroidJsonPrinter implements Printer {
+
+  static final int VERBOSE = 2;
+  static final int DEBUG = 3;
+  static final int INFO = 4;
+  static final int WARN = 5;
+  static final int ERROR = 6;
+  static final int ASSERT = 7;
 
   private final ThreadLocal<String> sLocalTag = new ThreadLocal<>();
 
@@ -39,11 +45,11 @@ class AndroidJsonPrinter implements Printer {
   private static final int CALL_STACK_OFFSET = 4;
   private static final String SEPARATOR = System.getProperty("line.separator");
 
-  private AndroidJsonPrinter() {
+  AndroidJsonPrinter() {
 
   }
 
-  static AndroidJsonPrinter newInstance() {
+  static Printer newInstance() {
     return new AndroidJsonPrinter();
   }
 
@@ -52,7 +58,7 @@ class AndroidJsonPrinter implements Printer {
 
     if (!compare(tag, JsonPrinter.TAG)) sLocalTag.set(tag);
 
-    if (TextUtils.isEmpty(json)) {
+    if (json == null || json.length() == 0) {
       boxing(priority, tag, EMPTY_JSON, extra);
       return;
     }
@@ -104,11 +110,7 @@ class AndroidJsonPrinter implements Printer {
     String level = "  |-";
     StackTraceElement[] trace = new Throwable().getStackTrace();
 
-    log(priority, tag, HORIZONTAL_DOUBLE_LINE
-        + " Thread: ["
-        + Thread.currentThread().getName()
-        + " ] "
-        + SEPARATOR);
+    log(priority, tag, HORIZONTAL_DOUBLE_LINE + getCurrentThreadInfo() + SEPARATOR);
 
     int stackOffset = CALL_STACK_OFFSET;
     //corresponding method count with the current stack may exceeds the stack trace. Trims the count
@@ -177,7 +179,6 @@ class AndroidJsonPrinter implements Printer {
   }
 
   private String getTag() {
-
     String tag = sLocalTag.get();
     if (tag != null) {
       sLocalTag.remove();
@@ -196,38 +197,67 @@ class AndroidJsonPrinter implements Printer {
     return count;
   }
 
+  private static String getCurrentThreadInfo() {
+
+    Thread thread = Thread.currentThread();
+    ThreadGroup group = thread.getThreadGroup();
+    String threadName = thread.getName();
+    int threadPriority = thread.getPriority();
+
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(" Thread")
+        .append('[')
+        .append("Name")
+        .append('=')
+        .append(threadName)
+        .append(',')
+        .append("Priority")
+        .append('=')
+        .append(threadPriority)
+        .append(',');
+
+    if (group != null) {
+      stringBuilder.append("GroupName").append('=').append(group.getName());
+    } else {
+      stringBuilder.append("GroupName").append('=').append("N/A");
+    }
+    stringBuilder.append(']');
+
+    return stringBuilder.toString();
+  }
+
   private static boolean compare(String str1, String str2) {
     return (str1 == null ? str2 == null : str1.equals(str2));
   }
 
   @Override public void v(String tag, String json, String... extra) {
-    this.printer(Log.VERBOSE, tag, json, extra);
+    this.printer(VERBOSE, tag, json, extra);
   }
 
   @Override public void i(String tag, String json, String... extra) {
-    this.printer(Log.INFO, tag, json, extra);
+    this.printer(INFO, tag, json, extra);
   }
 
   @Override public void d(String tag, String json, String... extra) {
-    this.printer(Log.DEBUG, tag, json, extra);
+    this.printer(DEBUG, tag, json, extra);
   }
 
   @Override public void w(String tag, String json, String... extra) {
-    this.printer(Log.WARN, tag, json, extra);
+    this.printer(WARN, tag, json, extra);
   }
 
   @Override public void e(String tag, String json, String... extra) {
-    this.printer(Log.ERROR, tag, json, extra);
+    this.printer(ERROR, tag, json, extra);
   }
 
   @Override public void wtf(String tag, String json, String... extra) {
-    this.printer(Log.ASSERT, tag, json, extra);
+    this.printer(ASSERT, tag, json, extra);
   }
 
   @Override public synchronized void log(int priority, String tag, String json) {
     if (json.length() < LOGGER_ENTRY_MAX_PAYLOAD) {
-      if (priority == Log.ASSERT) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) Log.wtf(tag, json);
+      if (priority == ASSERT) {
+        Log.wtf(tag, json);
       } else {
         Log.println(priority, tag, json);
       }
@@ -241,8 +271,8 @@ class AndroidJsonPrinter implements Printer {
       do {
         int end = Math.min(newline, i + LOGGER_ENTRY_MAX_PAYLOAD);
         String chunkMessage = json.substring(i, end);
-        if (priority == Log.ASSERT) {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) Log.wtf(tag, chunkMessage);
+        if (priority == ASSERT) {
+          Log.wtf(tag, chunkMessage);
         } else {
           Log.println(priority, tag, chunkMessage);
         }
