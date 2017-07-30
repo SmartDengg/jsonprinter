@@ -21,7 +21,7 @@ class TimberPlatform {
   private static boolean hasTimberOnClasspath() {
     boolean hasTimber = false;
     try {
-      Class.forName("timber.log.Timber");
+      Class.forName("timber.log.Timber", false, TimberPlatform.class.getClassLoader());
       hasTimber = true;
     } catch (ClassNotFoundException ignored) {
     }
