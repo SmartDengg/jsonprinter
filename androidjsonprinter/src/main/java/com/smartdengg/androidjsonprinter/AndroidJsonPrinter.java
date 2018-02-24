@@ -39,7 +39,6 @@ class AndroidJsonPrinter implements Printer {
   private static final String SEPARATOR = System.getProperty("line.separator");
 
   AndroidJsonPrinter() {
-
   }
 
   static Printer newInstance() {
@@ -72,19 +71,20 @@ class AndroidJsonPrinter implements Printer {
     }
   }
 
-  private void innerError(String tag, Throwable throwable, String message, Object... args) {
+  private void innerError(String tag, Throwable throwable, String message) {
 
     if (throwable != null && message != null) message += " : " + getStackTraceString(throwable);
     if (throwable != null && message == null) message = getStackTraceString(throwable);
     if (message == null) message = "No message/exception is set";
 
-    String errorMessage = formatString(message, args);
+    String errorMessage = formatString(message);
     boxing(Log.ERROR, tag, errorMessage);
   }
 
   private void boxing(int priority, String tag, String message, String... extra) {
 
     logTopBorder(priority, tag);
+
     if (extra != null && extra.length > 0) {
       //noinspection ForLoopReplaceableByForEach
       for (int i = 0, n = extra.length; i < n; i++) {

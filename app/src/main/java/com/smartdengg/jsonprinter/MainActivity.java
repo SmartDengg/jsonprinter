@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    String cityJson = "";
-    String todayJson = "";
+    StringBuilder cityJson = new StringBuilder();
+    StringBuilder todayJson = new StringBuilder();
 
     AssetManager assetManager = getAssets();
 
@@ -38,28 +38,26 @@ public class MainActivity extends AppCompatActivity {
       InputStreamReader inputReader = new InputStreamReader(assetManager.open("city.json"));
       BufferedReader bufReader = new BufferedReader(inputReader);
       String line;
-      while ((line = bufReader.readLine()) != null) cityJson += line;
-    } catch (IOException e) {
-      e.printStackTrace();
+      while ((line = bufReader.readLine()) != null) cityJson.append(line);
+    } catch (IOException ignored) {
     }
 
     try {
       InputStreamReader inputReader = new InputStreamReader(assetManager.open("today.json"));
       BufferedReader bufReader = new BufferedReader(inputReader);
       String line;
-      while ((line = bufReader.readLine()) != null) todayJson += line;
-    } catch (IOException e) {
-      e.printStackTrace();
+      while ((line = bufReader.readLine()) != null) todayJson.append(line);
+    } catch (IOException ignored) {
     }
 
-    final String finalCityJson = cityJson;
+    final String finalCityJson = cityJson.toString();
     findViewById(R.id.city).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         JsonPrinter.d(finalCityJson);
       }
     });
 
-    final String finalTodayJson = todayJson;
+    final String finalTodayJson = todayJson.toString();
     findViewById(R.id.today).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         JsonPrinter.d("today", finalTodayJson, "打印URL地址");
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     findViewById(R.id.gson).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        JsonPrinter.d("gson", new Gson().toJson(params));
+        JsonPrinter.d("gson", new Gson().toJson(params), "1", "2", "3");
       }
     });
 

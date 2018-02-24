@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/SmartDengg_JsonPrinter.iml" filepath="$PROJECT_DIR$/SmartDengg_JsonPrinter.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidjsonprinter/androidjsonprinter.iml" filepath="$PROJECT_DIR$/androidjsonprinter/androidjsonprinter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jsonprinter/jsonprinter.iml" filepath="$PROJECT_DIR$/jsonprinter/jsonprinter.iml" />
       <module fileurl="file://$PROJECT_DIR$/printer/printer.iml" filepath="$PROJECT_DIR$/printer/printer.iml" />
     </modules>
   </component>
